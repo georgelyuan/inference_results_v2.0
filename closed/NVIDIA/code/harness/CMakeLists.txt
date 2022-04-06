@@ -166,7 +166,7 @@ else()
         ######### TRITON-CPU PREREQS ##########
         include(FetchContent)
 
-        set(REPO_TAG main)
+        set(REPO_TAG mlperf-inference-v2.0-cpu)
         FetchContent_Declare(
         repo-core
         GIT_REPOSITORY https://github.com/triton-inference-server/core.git

@@ -18,14 +18,13 @@
 
 # Set up build directory
 build_dir="build/tmp/tritonbuild"
-server_build_branch=tanmayv-ov
-build_branch=main
+build_branch="mlperf-inference-v2.0-cpu"
 mkdir -p ${build_dir}
 pushd ${build_dir}
 rm -fr *
 
 # Clone Triton server repository
-git clone --single-branch --depth=1 -b ${server_build_branch} https://github.com/triton-inference-server/s\
+git clone --single-branch --depth=1 -b ${build_branch} https://github.com/triton-inference-server/s\
 erver.git
 
 # Build for CPU, TensorFlow2 and OpenVINO backends only
@@ -33,13 +32,10 @@ rm -fr build
 mkdir build
 cd server
 
-# Note that openvino_21_02 and openvino_21_04 backends are available only for
-# Triton's mlperf-inference-v1.1 branch. Other build_branchs will not work with
-# this signature. The more general signature is --backend=openvino:$(build_branch)
 ./build.py -v --build-dir=${build_dir}/build --cmake-dir=/w\
 orkspace/build --repo-tag=common:${build_branch} --repo-tag=core:${\
 build_branch} --repo-tag=backend:${build_branch} --repo-tag=thirdparty:${build_branch} --endpoint=g\
-rpc --endpoint=http --backend=openvino:${server_build_branch} --build-multiple-openvino
+rpc --endpoint=http --backend=openvino:${build_branch} --build-multiple-openvino
 
 # Copy out built libraries to host
 popd
